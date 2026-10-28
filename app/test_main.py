@@ -25,3 +25,38 @@ def test_get_human_age(
     expected: list,
 ) -> None:
     assert get_human_age(cat_age, dog_age) == expected
+
+
+@pytest.mark.parametrize(
+    "cat_age, dog_age, expected",
+    [
+        (-1, -1, [0, 0]),
+        (-100, -100, [0, 0]),
+        (1000000, 1000000, [249996, 199997]),
+    ],
+)
+def test_get_human_age_edge_values(
+    cat_age: int,
+    dog_age: int,
+    expected: list,
+) -> None:
+    assert get_human_age(cat_age, dog_age) == expected
+
+
+@pytest.mark.parametrize(
+    "cat_age, dog_age",
+    [
+        ("15", 15),
+        (15, "15"),
+        (15.5, 15),
+        (15, 15.5),
+        (None, 15),
+        (15, None),
+    ],
+)
+def test_get_human_age_incorrect_types(
+    cat_age: object,
+    dog_age: object,
+) -> None:
+    with pytest.raises(TypeError):
+        get_human_age(cat_age, dog_age)
